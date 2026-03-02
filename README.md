@@ -95,13 +95,13 @@ No npm install, no build step, no backend server required.
 
 #### Screenshots
 
-![Homepage](./screenshots/homepage.png)
+![Homepage]https://drive.google.com/file/d/1uJa29Q2XinLZO7FMZe94BGZBEw1P2_q-/view?usp=drive_link
 *Homepage with search bar, suggestion chips, and Kerala stats banner showing 14 districts covered*
 
-![Search Results](./screenshots/results.png)
+![Search Results]https://drive.google.com/file/d/1tdXCDmRBJmdiryyjh3PtsFrc1BjeAdoS/view?usp=drive_link
 *Search results for Paracetamol — showing Best Pick card, Lowest Price section, and Nearest Shops with real distances*
 
-![Location Picker](./screenshots/location-picker.png)
+![Location Picker]https://drive.google.com/file/d/1Ug1aqpP09OmJCg_qvTfmK3xcxrLq8W_3/view?usp=drive_link
 *District picker modal — users can choose from all 14 Kerala districts with emoji icons or use GPS*
 
 #### Diagrams
@@ -211,9 +211,7 @@ medicine/
 ## Project Demo
 
 ### Video
-[Add your demo video link here — YouTube or Google Drive]
-
-*Demo should show: searching a medicine → GPS auto-detection → Best Pick card appearing → Get Directions opening Google Maps*
+https://drive.google.com/drive/folders/1xwCkd20ZPu-QO3eDjCMm1a0vKl_ng4ZF
 
 ### Live Demo
 https://medicine-prices.vercel.app/
@@ -268,3 +266,4 @@ MIT License — free to use, modify, and distribute with attribution.
 ---
 
 <p align="center">Made with ❤️ at TinkerHub</p>
+
