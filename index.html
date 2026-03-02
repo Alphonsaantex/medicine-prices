@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Find the lowest medicine prices and nearest pharmacies across all 14 Kerala districts instantly." />
+    <title>Kerala Medicine Price &amp; Location Finder — All 14 Districts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav">
+            <a href="#" class="logo">
+                <div class="logo-icon">💊</div>
+                <div class="logo-text">MediFind<br><span>Statewide</span></div>
+            </a>
+            <div class="nav-badge">🟢 Live Prices</div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-pill">
+            <div class="pulse-dot"></div>Covering all 14 Kerala districts 🌴
+        </div>
+        <h1>Find <span class="grad">Medicine Prices</span><br>Across Kerala — Instantly</h1>
+        <p>Compare medicine prices across pharmacies in all 14 Kerala districts and find the nearest shop with the best
+            deal.</p>
+        <div class="search-wrapper">
+            <div class="search-box" id="search-box">
+                <div class="search-icon">🔍</div>
+                <input type="text" id="medicine-input" placeholder="Search medicine (e.g. Paracetamol, Ibuprofen…)"
+                    autocomplete="off" aria-label="Medicine name" />
+                <button class="search-btn" id="search-btn" onclick="handleSearch()"><span>🔍</span> Search</button>
+            </div>
+            <div class="search-suggestions" id="suggestions">
+                <span class="suggestion-chip" onclick="quickSearch('Paracetamol')">Paracetamol</span>
+                <span class="suggestion-chip" onclick="quickSearch('Ibuprofen')">Ibuprofen</span>
+                <span class="suggestion-chip" onclick="quickSearch('Amoxicillin')">Amoxicillin</span>
+                <span class="suggestion-chip" onclick="quickSearch('Azithromycin')">Azithromycin</span>
+                <span class="suggestion-chip" onclick="quickSearch('Metformin')">Metformin</span>
+                <span class="suggestion-chip" onclick="quickSearch('Cetirizine')">Cetirizine</span>
+                <span class="suggestion-chip" onclick="quickSearch('levocetirizine')">Levocetirizine</span>
+                <span class="suggestion-chip" onclick="quickSearch('ambroxol')">Ambroxol</span>
+                <span class="suggestion-chip" onclick="quickSearch('spinraza')">Spinraza</span>
+                <span class="suggestion-chip" onclick="quickSearch('zolgensma')">Zolgensma</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-value">1,800+</div>
+            <div class="stat-label">Kerala Pharmacies</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">10,000+</div>
+            <div class="stat-label">Medicine Listings</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">14</div>
+            <div class="stat-label">Districts Covered</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">₹0</div>
+            <div class="stat-label">Price to Search</div>
+        </div>
+    </div>
+
+    <div id="loader" class="hidden">
+        <div class="spinner"></div>
+        <p>Searching across pharmacies…</p>
+    </div>
+
+    <div id="results" class="container hidden">
+
+        <div class="results-header">
+            <div class="results-title">Results for <span class="results-query" id="query-display"></span></div>
+            <div class="results-count" id="results-count"></div>
+        </div>
+
+        <!-- Location detect status -->
+        <div id="location-detect-status" class="location-status hidden"></div>
+
+        <!-- Section 0: Best Pick -->
+        <div class="section" id="best-pick-section">
+            <div class="section-header">
+                <div class="section-icon" style="background:linear-gradient(135deg,#f59e0b22,#f59e0b44)">⭐</div>
+                <div style="flex:1">
+                    <div class="section-title">Best Pick Near You</div>
+                    <div class="section-subtitle" id="best-pick-subtitle">Nearest pharmacy with the cheapest price —
+                        personalised for your location</div>
+                </div>
+            </div>
+            <div id="best-pick-grid"></div>
+        </div>
+
+        <!-- Section 1: Lowest Price -->
+        <div class="section" id="lowest-section">
+            <div class="section-header">
+                <div class="section-icon green">🏷️</div>
+                <div>
+                    <div class="section-title">Lowest Price in State</div>
+                    <div class="section-subtitle">These pharmacies offer the best deals statewide</div>
+                </div>
+            </div>
+            <div class="cards-grid" id="lowest-grid"></div>
+        </div>
+
+        <!-- Section 2: Nearest Shops -->
+        <div class="section" id="nearest-section">
+            <div class="section-header">
+                <div class="section-icon blue">📍</div>
+                <div style="flex:1">
+                    <div class="section-title">Nearest Shops to Me</div>
+                    <div class="section-subtitle" id="nearest-subtitle">No location set</div>
+                </div>
+                <button class="btn-change-location" id="change-location-btn" onclick="openLocationPicker()">
+                    📍 <span id="location-btn-label">Set Location</span> <span
+                        style="opacity:.6;font-size:11px">▾</span>
+                </button>
+            </div>
+            <div class="cards-grid" id="nearest-grid"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>🏥 <strong>MediFind Statewide</strong> — Prices for informational purposes only. Always verify at the
+            pharmacy. &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Help</a></p>
+    </footer>
+
+    <!-- ── Location Picker Modal ── -->
+    <div id="location-modal-overlay" class="modal-overlay hidden" onclick="closeLocationPicker(event)">
+        <div class="modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <div class="modal-title"><span>🌴</span> Choose Kerala District</div>
+                <button class="modal-close" onclick="closeLocationPicker()" aria-label="Close">✕</button>
+            </div>
+
+            <div class="modal-current" id="modal-current-display">
+                <div class="modal-current-icon">🌐</div>
+                <div>
+                    <div class="modal-current-label">Active Location</div>
+                    <div class="modal-current-value" id="modal-current-value">Not set</div>
+                </div>
+            </div>
+
+            <div class="modal-section-label">Use Device GPS</div>
+            <button class="btn-gps" id="btn-gps" onclick="useGPSLocation()">
+                <span style="font-size:22px">🛰️</span>
+                <div>
+                    <div class="gps-title">Use My Current Location</div>
+                    <div class="gps-desc">Detect via browser GPS</div>
+                </div>
+                <span class="gps-arrow" id="gps-arrow">→</span>
+            </button>
+
+            <div class="modal-divider"><span>or pick a city</span></div>
+
+            <div class="city-search-wrap">
+                <span>🔍</span>
+                <input type="text" id="city-search-input" class="city-search-input" placeholder="Search district…"
+                    oninput="filterCities()" autocomplete="off" />
+            </div>
+
+            <div class="modal-section-label" style="margin-top:16px">Select a Kerala District</div>
+            <div class="city-grid" id="city-grid"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
